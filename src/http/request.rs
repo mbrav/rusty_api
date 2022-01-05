@@ -1,4 +1,4 @@
-use super::method::Method;
+use super::method::{Method, MethodError};
 use std::convert::TryFrom;
 use std::error::Error;
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
@@ -36,8 +36,7 @@ impl TryFrom<&[u8]> for Request {
             return Err(ParseError::InvalidProtocol);
         }
 
-        unimplemented!();
-        // let method: Method = method.parse()?;
+        let method: Method = method.parse()?;
 
         // let mut query_string = None;
         // if let Some(i) = path.find('?') {
@@ -50,6 +49,7 @@ impl TryFrom<&[u8]> for Request {
         //     query_string,
         //     method,
         // })
+        unimplemented!();
     }
 }
 
@@ -78,6 +78,12 @@ impl ParseError {
             Self::InvalidProtocol => "Invalid Protocol",
             Self::InvalidMethod => "Invalid Method",
         }
+    }
+}
+
+impl From<MethodError> for ParseError {
+    fn from(_: MethodError) -> Self {
+        Self::InvalidMethod
     }
 }
 
