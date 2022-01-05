@@ -1,3 +1,4 @@
+use std::io::Read;
 use std::net::TcpListener;
 
 pub struct Server {
@@ -18,8 +19,16 @@ impl Server {
             // let res = listener.accept();
             // let (stream, addr) = res.unwrap();
             match listener.accept() {
-                Ok((stream, _)) => {
+                Ok((mut stream, _)) => {
                     println!("Ok");
+                    // 1 KB Buffer
+                    let mut buffer = [0; 1024];
+                    match stream.read(&mut buffer) {
+                        Ok(_) => {
+                            println!("Received: {}", String::from_utf8_lossy(&buffer))
+                        }
+                        Err(er) => println!("Connection error {}", er),
+                    }
                 }
                 Err(er) => println!("Error {}", er),
             }
