@@ -1,16 +1,16 @@
+use std::io;
+
 fn main() {
-    let a = 2;
-    let result = stack_only(a);
-    dbg!(result);
+    println!("Enter your weight (kg): ");
+    let mut input = String::new();
+
+    io::stdin().read_line(&mut input).unwrap();
+
+    let weight: f32 = input.trim().parse().unwrap();
+    let mars_weight = mars(weight);
+    println!("Weight on Mars: {}kg", mars_weight);
 }
 
-fn stack_only(b: i32) -> i32 {
-    let c = 3;
-    return b + c + stack_and_heap();
-}
-
-fn stack_and_heap() -> i32 {
-    let d = 5;
-    let e = Box::new(7);
-    return d + *e;
+fn mars(weight: f32) -> f32 {
+    (weight / 9.81) * 3.711
 }
