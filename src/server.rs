@@ -10,10 +10,19 @@ impl Server {
     }
 
     pub fn run(self) {
-        println!("Server running on {}", self.addr);
+        println!("Server running on http://{}", self.addr);
 
         let listener = TcpListener::bind(&self.addr).unwrap();
 
-        loop {}
+        loop {
+            // let res = listener.accept();
+            // let (stream, addr) = res.unwrap();
+            match listener.accept() {
+                Ok((stream, _)) => {
+                    println!("Ok");
+                }
+                Err(er) => println!("Error {}", er),
+            }
+        }
     }
 }
