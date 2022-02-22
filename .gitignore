@@ -29,3 +29,4 @@ upload.png
 basics/nested-routing/src/appconfig.rs
 
 actix_examples/
+Cargo.lock
